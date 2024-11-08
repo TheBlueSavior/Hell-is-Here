@@ -1,0 +1,4 @@
+//sooooound. let's keep this one organized from the start yeah?
+
+//Startup sfx
+misc/startupdone "Sounds/Misc/HIH_MenuGroan.ogg"
