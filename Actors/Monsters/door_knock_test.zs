@@ -3,11 +3,11 @@ class DoorKnocker : KAI_Creature replaces DoomImp
 {
     FLineTraceData line_data;
 
-    bool found_door;
+    //bool found_door;
     Vector3 found_door_pos;
 
 
-    void analyzeLine()
+    bool analyzeLine()
     {
         int door_specials[]={
             10,11,12,13,14,
@@ -17,12 +17,12 @@ class DoorKnocker : KAI_Creature replaces DoomImp
         };
 
         
-        //Console.printf("hit line %i", line_data.HitLine.special);
+        Console.printf("testing hit line %i", line_data.HitLine.special);
+        
         
         for (int i = 0; i < door_specials.size(); i++) {
             if  (line_data.HitLine.special == door_specials[i])
             {
-                found_door = true;
                 
                 // for the middle of the door
                 int dist = sqrt((line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y));
@@ -31,11 +31,14 @@ class DoorKnocker : KAI_Creature replaces DoomImp
                 // (we could also randomize the position slightly in the future)
                 found_door_pos.x = line_data.HitLine.v2.p.x + (dist / 2);
                 found_door_pos.y = line_data.HitLine.v2.p.y + (self.radius * 1/3);
-            }
-            else {
-                found_door = false;
+
+                Console.printf("line found");
+
+                return true;
             }
         }
+
+        return false;
     }
 
     default
@@ -63,9 +66,6 @@ class DoorKnocker : KAI_Creature replaces DoomImp
 		    TROO AB 10 A_Look;
 		    Loop;
 	    See:
-		    TROO AA 3 A_Chase;
-            TNT1 A 0 A_JumpIf(self.found_door == true, "DoorFound");
-            //TROO BB 3 LineTrace(self.Angle, 20000, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
             TNT1 A 0 
             {
                 // spread out a cone of LineTraces
@@ -80,16 +80,24 @@ class DoorKnocker : KAI_Creature replaces DoomImp
                     angleToVec.z = 0;
                     KAI_LOFRaycast.VisualizeTracePath(self.pos, angleToVec, 4096);
                     LineTrace(fire_angle, 4096, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
+                    A_JumpIf(analyzeLine(), "DoorFound");
                 }
             }
-            TNT1 A 0 analyzeLine();
+            //TNT1 A 0 
+            //{
+            //    bool found_door = analyzeLine();
+            //    A_JumpIf(found_door, "DoorFound");
+            //}
+		    TROO AA 3 A_Chase;
+            //TROO BB 3 LineTrace(self.Angle, 20000, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
             TROO CC 3 A_Chase;
             TROO DD 3 A_Chase;
 		    Loop;
         DoorFound:
             TNT1 A 0
             {
-                Console.printf("Door has been found at %i, %i", found_door_pos.x, found_door_pos.y);
+                Console.printf("Door has been found at %i, %i", self.found_door_pos.x, self.found_door_pos.y);
+                Console.prinft("helloooooo!?!??!?!?!?!");
             } 
             
 
@@ -99,21 +107,24 @@ class DoorKnocker : KAI_Creature replaces DoomImp
 
             TNT1 A 0
             {
-                if (self.found_door)
+                if (self.pos ~== found_door_pos)
                 {
-                    A_Jump(256, "DoorFound");
-                }
-                else {
-                    self.found_door = false;
                     A_Jump(256, "KnockDoor");
                 }
+                //else {
+                //    self.found_door = false;
+                //    A_Jump(256, "KnockDoor");
+                //}
             }
-
+            Loop;
         KnockDoor:
             // play a knocking sound, maybe we could possibly make the knocking sound change depending on the type of door, but that might be overkill
+            TNT1 A 0
+            {
+                Console.printf("Door has been reached!");
+            }
 
-
-            Goto DoorFound;
+            Goto See;
         Missile:
             TROO EF 8 A_FaceTarget;
             TROO G 6 A_BruisAttack;
