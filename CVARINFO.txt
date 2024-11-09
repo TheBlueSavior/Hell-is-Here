@@ -1,1 +1,3 @@
 //we already know we're gonna need this one
+
+Server Int hih_forgetcheck = 1;

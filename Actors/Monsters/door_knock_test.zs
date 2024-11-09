@@ -1,5 +1,5 @@
 // this is just a proof of concept class, this will (ideally) be implemented with the actual demons in the future
-class DoorKnocker : KAI_Creature replaces DoomImp
+class DoorKnocker : HIH_MonsterBase replaces DoomImp
 {
     FLineTraceData line_data;
 
