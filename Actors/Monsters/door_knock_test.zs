@@ -30,7 +30,7 @@ class DoorKnocker : KAI_Creature replaces DoomImp
                 // we get around the middle of the door and then move the goal position upwards a bit depending on the calling actors radius
                 // (we could also randomize the position slightly in the future)
                 found_door_pos.x = line_data.HitLine.v2.p.x + (dist / 2);
-                found_door_pos.y = line_data.HitLine.v2.p.y + (self.radius * 1/3);
+                found_door_pos.y = line_data.HitLine.v2.p.y + (self.radius * 1/2);
 
                 Console.printf("line found");
 
@@ -80,15 +80,15 @@ class DoorKnocker : KAI_Creature replaces DoomImp
                     angleToVec.z = 0;
                     KAI_LOFRaycast.VisualizeTracePath(self.pos, angleToVec, 4096);
                     LineTrace(fire_angle, 4096, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
-                    A_JumpIf(analyzeLine(), "DoorFound");
+                    
+                    if (analyzeLine()) {
+                        SetState(FindState("DoorFound", false));
+                    }
+                    //A_JumpIf(analyzeLine(), "DoorFound");
                 }
             }
-            //TNT1 A 0 
-            //{
-            //    bool found_door = analyzeLine();
-            //    A_JumpIf(found_door, "DoorFound");
-            //}
 		    TROO AA 3 A_Chase;
+            //TROO AA 3 A_Jump(256, "DoorFound");
             //TROO BB 3 LineTrace(self.Angle, 20000, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
             TROO CC 3 A_Chase;
             TROO DD 3 A_Chase;
@@ -101,19 +101,17 @@ class DoorKnocker : KAI_Creature replaces DoomImp
             
 
             // pretty buggy fix l8er
-            TROO AA 3 KAI_MoveTowards(found_door_pos, 0.8, 14, 0, 0);
+            TROO AB 3 KAI_MoveTowards(found_door_pos, 0.8, 14, 0, 0);
             // check if actor has reached door, then go to KnockDoor
 
             TNT1 A 0
             {
-                if (self.pos ~== found_door_pos)
+                // tolerance
+                int dist = sqrt(((self.pos.x - found_door_pos.x) * (self.pos.x - found_door_pos.x)) + ((self.pos.y - found_door_pos.y) * (self.pos.y - found_door_pos.y) + (self.pos.y - found_door_pos.y)));
+                if (dist <= 15.0)
                 {
-                    A_Jump(256, "KnockDoor");
+                    SetState(FindState("KnockDoor", false));
                 }
-                //else {
-                //    self.found_door = false;
-                //    A_Jump(256, "KnockDoor");
-                //}
             }
             Loop;
         KnockDoor:
@@ -122,6 +120,9 @@ class DoorKnocker : KAI_Creature replaces DoomImp
             {
                 Console.printf("Door has been reached!");
             }
+
+            TROO E 10;
+            TROO F 10 A_StartSound("imp/pain");
 
             Goto See;
         Missile:
