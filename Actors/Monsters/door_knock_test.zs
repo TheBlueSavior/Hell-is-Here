@@ -19,7 +19,7 @@ class DoorKnocker : KAI_Creature replaces DoomImp
         
         Console.printf("testing hit line %i", line_data.HitLine.special);
         
-        
+
         for (int i = 0; i < door_specials.size(); i++) {
             if  (line_data.HitLine.special == door_specials[i])
             {
@@ -97,7 +97,6 @@ class DoorKnocker : KAI_Creature replaces DoomImp
             TNT1 A 0
             {
                 Console.printf("Door has been found at %i, %i", self.found_door_pos.x, self.found_door_pos.y);
-                Console.prinft("helloooooo!?!??!?!?!?!");
             } 
             
 
