@@ -16,8 +16,6 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
             249,252,262,263,265,266,268,274
         };
 
-    
-        
 
         if (line_data.HitLine != null) {
 
@@ -26,10 +24,11 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
             for (int i = 0; i < door_specials.size(); i++) {
                 if  (line_data.HitLine.special == door_specials[i])
                 {
-                    
                     // for the middle of the door
-                    int dist = sqrt((line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y));
-                    
+                    //double dist = sqrt((line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y));
+
+                    double dist = KAI_Math.Distance3DLine((line_data.HitLine.v1.p, 0), (line_data.HitLine.v2.p, 0), self.pos);
+
                     // we get around the middle of the door and then move the goal position upwards a bit depending on the calling actors radius
                     // (we could also randomize the position slightly in the future)
                     found_door_pos.x = line_data.HitLine.v2.p.x + (dist / 2);
@@ -42,6 +41,7 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
             }
        
         }
+
         return false;
     }
 
@@ -78,11 +78,8 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
                     float angle_offset = ((i - (20 - 1) / 2) * (90.0 / (20 - 1)));
                     float fire_angle = self.Angle + angle_offset;
 
-
-                    Vector3 angleToVec;
-                    angleToVec.xy = AngleToVector(fire_angle, 4096);
-                    angleToVec.z = 0;
-                    KAI_LOFRaycast.VisualizeTracePath(self.pos, angleToVec, 4096);
+                    
+                    KAI_LOFRaycast.VisualizeTracePath(self.pos, (AngleToVector(fire_angle, 4096), 0), 4096);
                     LineTrace(fire_angle, 4096, self.Pitch, TRF_THRUSPECIES | TRF_THRUACTORS | TRF_THRUHITSCAN | TRF_SOLIDACTORS, 0, 0, data : line_data);
                     
                     if (analyzeLine()) {
@@ -111,7 +108,8 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
             TNT1 A 0
             {
                 // tolerance
-                int dist = sqrt(((self.pos.x - found_door_pos.x) * (self.pos.x - found_door_pos.x)) + ((self.pos.y - found_door_pos.y) * (self.pos.y - found_door_pos.y) + (self.pos.y - found_door_pos.y)));
+                double dist = sqrt(((self.pos.x - found_door_pos.x) * (self.pos.x - found_door_pos.x)) + ((self.pos.y - found_door_pos.y) * (self.pos.y - found_door_pos.y) + (self.pos.y - found_door_pos.y)));
+
                 if (dist <= 15.0)
                 {
                     SetState(FindState("KnockDoor", false));
