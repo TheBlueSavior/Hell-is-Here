@@ -1,3 +1,5 @@
 version "4.11.3"
 
+#include "System/MonsterBase.zs"
+
 #include "Actors/Monsters/door_knock_test.zs"
