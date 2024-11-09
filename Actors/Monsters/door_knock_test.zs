@@ -16,28 +16,32 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
             249,252,262,263,265,266,268,274
         };
 
+    
         
-        Console.printf("testing hit line %i", line_data.HitLine.special);
-        
 
-        for (int i = 0; i < door_specials.size(); i++) {
-            if  (line_data.HitLine.special == door_specials[i])
-            {
-                
-                // for the middle of the door
-                int dist = sqrt((line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y));
-                
-                // we get around the middle of the door and then move the goal position upwards a bit depending on the calling actors radius
-                // (we could also randomize the position slightly in the future)
-                found_door_pos.x = line_data.HitLine.v2.p.x + (dist / 2);
-                found_door_pos.y = line_data.HitLine.v2.p.y + (self.radius * 1/2);
+        if (line_data.HitLine != null) {
 
-                Console.printf("line found");
-
-                return true;
+            Console.printf("testing hit line %i", line_data.HitLine.special);
+            
+            for (int i = 0; i < door_specials.size(); i++) {
+                if  (line_data.HitLine.special == door_specials[i])
+                {
+                    
+                    // for the middle of the door
+                    int dist = sqrt((line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y) * (line_data.HitLine.v2.p.x - line_data.HitLine.v1.p.x) + (line_data.HitLine.v2.p.y - line_data.HitLine.v1.p.y));
+                    
+                    // we get around the middle of the door and then move the goal position upwards a bit depending on the calling actors radius
+                    // (we could also randomize the position slightly in the future)
+                    found_door_pos.x = line_data.HitLine.v2.p.x + (dist / 2);
+                    found_door_pos.y = line_data.HitLine.v2.p.y + (self.radius * 1/2);
+    
+                    Console.printf("line found");
+    
+                    return true;
+                }
             }
+       
         }
-
         return false;
     }
 
