@@ -64,6 +64,8 @@ class Litter : ObjectsBase
 
     override void CollidedWith(Actor other, bool passive)
     {
+        Thrust(other.speed, AngleTo(other) + 180);
+        
         if(CollideDamage)
         {
             other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
@@ -71,7 +73,6 @@ class Litter : ObjectsBase
             self.CollideDamage = false;
         }
 
-        Thrust(other.speed, other.angle);
         //other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
 
         Console.Printf("Collided with an entity!");
