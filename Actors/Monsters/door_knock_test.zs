@@ -45,7 +45,7 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
         return false;
     }
 
-    default
+    Default
     {
         Health 60;
 		Radius 20;
@@ -64,7 +64,7 @@ class DoorKnocker : HIH_MonsterBase replaces DoomImp
 		Tag "$FN_IMP";
     }
 
-    states 
+    States 
     {
         Spawn:
 		    TROO AB 10 A_Look;
