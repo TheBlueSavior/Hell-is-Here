@@ -1,5 +1,14 @@
 class LitterTest : Litter
 {
+
+    override void BeginPlay()
+    {
+        self.SkinSprites.Push('SMGT');
+        self.SkinSprites.Push('SMBT');
+
+        Super.BeginPlay();
+    }
+
     Default
     {
         Mass 20;
@@ -7,13 +16,15 @@ class LitterTest : Litter
         Height 2;
         Speed 10;
         Damage 10;
+        ObjectsBase.CurrentSkinIndex 1;
         //+FLATSPRITE;
     }
+
 
     States
     {
         Spawn:
-            SMBT ABCD 4 Manipulate(60, 100, 100, 5);
+            #### ABCD 4 Manipulate(60, 100, 100, 5);
             Loop;
     }
 

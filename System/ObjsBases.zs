@@ -3,10 +3,32 @@ class ObjectsBase : KAI_Actor
     double SpawnWeight;
     property SpawnWeight : SpawnWeight;
 
+    // current skin index should be dependent on some kind of cvar in the future
+    int CurrentSkinIndex;
+    property CurrentSkinIndex : CurrentSkinIndex;
+
+
+    Array<Name> SkinSprites;
+    property SkinSprites : SkinSprites;
+
+
+    override void PostBeginPlay()
+    {
+        self.sprite = GetSpriteIndex(SkinSprites[CurrentSkinIndex]);
+        Super.PostBeginPlay();
+    }
+
+    void ChangeSprites(int index)
+    {
+        CurrentSkinIndex = index;
+
+        self.sprite = GetSpriteIndex(SkinSprites[CurrentSkinIndex]);
+    }
 
     Default 
     {
         ObjectsBase.SpawnWeight 1.0;
+        ObjectsBase.CurrentSkinIndex 0;
         +NONSHOOTABLE;
         +NOBLOOD;
         +CASTSPRITESHADOW;
@@ -20,10 +42,11 @@ class Litter : ObjectsBase
 {
     bool DealDamage;
 
+
     double SoundVolume;
     property SoundVolume : SoundVolume;
 
-    
+
     void ToggleFloating()
     {
         self.bFloat = !self.bFloat;
@@ -70,7 +93,7 @@ class Litter : ObjectsBase
         {
             other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
 
-            self.DealDamage = false;
+            ToggleDamage();
         }
 
         Super.CollidedWith(other, passive);
@@ -81,8 +104,16 @@ class Litter : ObjectsBase
     {
         //+THRUSPECIES;
         ObjectsBase.SpawnWeight 1.0;
+        ObjectsBase.CurrentSkinIndex 0;
         Litter.SoundVolume 0.5;
     }
+}
+
+class Decoration : ObjectsBase
+{
+
+    // effect when a demon is messing with it
+    virtual void Modify(){}
 }
 
 class Trap : ObjectsBase
@@ -90,7 +121,8 @@ class Trap : ObjectsBase
     double SoundVolume;
     property SoundVolume : SoundVolume;
 
-
+    
+    // effect when trap is triggered
     virtual void trigger(){}
 
     Default
