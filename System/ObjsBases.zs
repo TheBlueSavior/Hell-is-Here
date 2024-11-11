@@ -18,49 +18,39 @@ class ObjectsBase : KAI_Actor
 
 class Litter : ObjectsBase
 {
-    bool CollideDamage;
+    bool DealDamage;
 
     double SoundVolume;
     property SoundVolume : SoundVolume;
 
+    
+    void ToggleFloating()
+    {
+        self.bFloat = !self.bFloat;
+        self.bNoGravity = !self.bNoGravity;
+        self.bFloatBob = !self.bFloatBob;
+    }
+
+    void ToggleDamage()
+    {
+        self.DealDamage = !self.DealDamage;
+    }
 
     void Manipulate(double angle, double length, double airheight, double airmod)
     {
         Vector3 VectPos = (AngleToVector(angle, length), airheight);
 
-        self.bFloat = true;
-        self.bNoGravity = true;
+        //console.printf("hello?");
+        KAI_MoveTowards(VectPos, 1.0, 0, 0, 0);
+        VectPos.z += sin(GetAge() % airmod * (self.mass * 1/4));
 
-        while (self.pos != VectPos)
-        {
-            KAI_MoveTowards(VectPos, 1.0, 0, 0, 0);
-            VectPos.z += sin(GetAge() % airmod * (self.mass * 1/4));
-        }
-
-        self.bFloat = false;
-        self.bNoGravity = false;
     }
 
     void ChuckSelf(Actor targ, double givenPitch)
     {
-        self.bFloat = true;
-        self.bNoGravity = true;
-        self.bFloatBob = true;
 
-
-        while (CheckSpaceSize(self.radius, self.height, 8, false) == -1)
-        {
-            Vel3DFromAngle(self.speed, AngleTo(targ, false), givenPitch);
-
-            self.CollideDamage = true;
-        }
-
-        self.CollideDamage = false;
+        Vel3DFromAngle(self.speed, AngleTo(targ, false), givenPitch);
         //    targ.DamageMobj(self, self, self.damage, 'Normal', 0, 0);
-
-        self.bFloat = false;
-        self.bNoGravity = false;
-        self.bFloatBob = false;
     }
 
     override void CollidedWith(Actor other, bool passive)
@@ -76,14 +66,12 @@ class Litter : ObjectsBase
             //Console.Printf("Collided with an entity!");
         }
         
-        if(CollideDamage)
+        if(DealDamage)
         {
             other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
 
-            self.CollideDamage = false;
+            self.DealDamage = false;
         }
-
-        //other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
 
         Super.CollidedWith(other, passive);
     }
@@ -91,7 +79,7 @@ class Litter : ObjectsBase
 
     Default
     {
-        +THRUSPECIES;
+        //+THRUSPECIES;
         ObjectsBase.SpawnWeight 1.0;
         Litter.SoundVolume 0.5;
     }

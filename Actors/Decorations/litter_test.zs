@@ -13,7 +13,8 @@ class LitterTest : Litter
     States
     {
         Spawn:
-            SMBT ABCD 4;
+            SMBT ABCD 4 Manipulate(60, 100, 100, 5);
             Loop;
     }
+
 }
