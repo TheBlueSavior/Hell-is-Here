@@ -11,6 +11,7 @@ class ObjectsBase : KAI_Actor
         +NOBLOOD;
         +CASTSPRITESHADOW;
         +FLOORCLIP;
+        +INVULNERABLE;
         +FIXMAPTHINGPOS;
     }
 }
@@ -64,7 +65,16 @@ class Litter : ObjectsBase
 
     override void CollidedWith(Actor other, bool passive)
     {
-        Thrust(other.speed, AngleTo(other) + 180);
+        if (other.bIsMonster == true) 
+        {
+            Thrust(other.speed / 4, AngleTo(other) + 180);
+            //Console.Printf("Collided with a monster!");
+        }
+        else
+        {
+            Thrust(other.speed / 2, AngleTo(other) + 180);
+            //Console.Printf("Collided with an entity!");
+        }
         
         if(CollideDamage)
         {
@@ -74,8 +84,6 @@ class Litter : ObjectsBase
         }
 
         //other.DamageMobj(self, self, self.damage + (self.speed * 1/3), 'Normal', 0, 0);
-
-        Console.Printf("Collided with an entity!");
 
         Super.CollidedWith(other, passive);
     }
