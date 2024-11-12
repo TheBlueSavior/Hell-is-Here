@@ -24,7 +24,7 @@ class LitterTest : Litter
     States
     {
         Spawn:
-            #### ABCD 4 Manipulate(60, 100, 100, 5);
+            #### ABCD 4;
             Loop;
     }
 

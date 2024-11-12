@@ -78,6 +78,7 @@ class Litter : ObjectsBase
 
     override void CollidedWith(Actor other, bool passive)
     {
+        // for some reason monsters seem to be able to push away litter at a higher velocity than the player can
         if (other.bIsMonster == true) 
         {
             Thrust(other.speed / 4, AngleTo(other) + 180);
@@ -85,6 +86,7 @@ class Litter : ObjectsBase
         }
         else
         {
+            // in the future we should call whatever creates sound monsters can detect here
             Thrust(other.speed / 2, AngleTo(other) + 180);
             //Console.Printf("Collided with an entity!");
         }
@@ -121,6 +123,22 @@ class Trap : ObjectsBase
     double SoundVolume;
     property SoundVolume : SoundVolume;
 
+    // im thinking we have a seperate actor that detects collisions from players and sends that back to the trap, triggering the trap
+    // we can just use the originator ptr to call the traps trigger function
+    String TriggerActor;
+    property TriggerActor : TriggerActor;
+
+    // spawn offset of the trigger actor
+    Vector3 TriggerSpawnAway;
+    property TriggerSpawnAway : TriggerSpawnAway;
+
+
+    override void BeginPlay()
+    {
+        A_SpawnItemEx(TriggerActor, TriggerSpawnAway.x, TriggerSpawnAway.y, TriggerSpawnAway.z, 0, 0, 0, 0, 0, 0, 0);
+
+        Super.BeginPlay();
+    }
     
     // effect when trap is triggered
     virtual void trigger(){}
