@@ -114,7 +114,7 @@ class Litter : ObjectsBase
 class Decoration : ObjectsBase
 {
 
-    // effect when a demon is messing with it
+    // effect when a demon is messing with it, overridable because each new class should have a different effect
     virtual void Modify(){}
 }
 
@@ -124,8 +124,8 @@ class Trap : ObjectsBase
     property SoundVolume : SoundVolume;
 
     // im thinking we have a seperate actor that detects collisions from players and sends that back to the trap, triggering the trap
-    // we can just use the originator ptr to call the traps trigger function
-    String TriggerActor;
+    // we can just use the originator ptr to call the owning traps trigger function
+    Class<Actor> TriggerActor;
     property TriggerActor : TriggerActor;
 
     // spawn offset of the trigger actor
