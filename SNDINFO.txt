@@ -2,3 +2,5 @@
 
 //Startup sfx
 misc/startupdone "Sounds/Misc/HIH_MenuGroan.ogg"
+
+HIH_TITLEMAP "Sounds/Misc/HIH_TITLEMAP.ogg"
