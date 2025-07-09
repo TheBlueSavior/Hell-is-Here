@@ -1,0 +1,18 @@
+//Event handlers, sound precache goes here
+
+gameinfo
+{
+menufontcolor_title = "White" 
+menufontcolor_label = "White"
+menufontcolor_value = "White"
+menufontcolor_action = "White"
+menufontcolor_header = "White" 
+menufontcolor_highlight = "LIGHTGray"
+menufontcolor_selection = "RED"
+DimAmount = 0.3
+DimColor = "000000"
+Quitmessages = 
+"Goodbye.",
+"Leaving so soon?",
+"We'll meet again."
+}

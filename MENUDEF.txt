@@ -1,1 +1,50 @@
 //menu shit
+DEFAULTLISTMENU
+{
+	Font "DSBIGFONT", "w1", "l5"
+	IfGame(Doom, Chex)
+	{
+		Selector "M_SKULL1", -32, -5
+		Linespacing 16
+		Font "DSBIGFONT", "w1", "f0"
+	}
+	IfGame(Strife)
+	{
+		Selector "M_SKULL1", -28, -5
+		Linespacing 12
+	}
+	IfGame(Heretic, Hexen)
+	{
+		Selector "M_SKULL1", -28, -1
+		Linespacing 12
+	}
+}
+
+
+LISTMENU "MainMenu"
+{
+        StaticPatchCentered 150,-50,"HIH_TITL"
+        Position 110,115
+        IfOption(ReadThis)
+        {
+        Position 97,62
+        }
+        TextItem "NEW GAME","n","PlayerclassMenu"
+        ifOption(SwapMenu)
+        {
+            TextItem "LOAD GAME","l","LoadGameMenu"
+            TextItem "SAVE GAME","s","SaveGameMenu"
+            TextItem "OPTIONS","o","OptionsMenu"
+        }
+        else
+        {
+            TextItem "OPTIONS","o","OptionsMenu"
+            TextItem "LOAD GAME","l","LoadGameMenu"
+            TextItem "SAVE GAME","s","SaveGameMenu"
+        }
+        ifOption(ReadThis)
+        {
+            TextItem "READ THIS","r","ReadThisMenu"
+        }
+        TextItem "QUIT GAME","q","QuitMenu"
+}
