@@ -4,3 +4,26 @@
 misc/startupdone "Sounds/Misc/HIH_MenuGroan.ogg"
 
 HIH_TITLEMAP "Sounds/Misc/HIH_TITLEMAP.ogg"
+
+//POSSESSED
+$random Possessed/Footstep { Possessed/Footstep1 Possessed/Footstep2 Possessed/Footstep3 Possessed/Footstep4 }
+Possessed/Footstep1 "Sounds/Possessed/Footsteps/HIH_P_Footstep1.ogg"
+Possessed/Footstep2 "Sounds/Possessed/Footsteps/HIH_P_Footstep1.ogg"
+Possessed/Footstep3 "Sounds/Possessed/Footsteps/HIH_P_Footstep1.ogg"
+Possessed/Footstep4 "Sounds/Possessed/Footsteps/HIH_P_Footstep1.ogg"
+
+$limit Possessed/Footstep 12
+$rolloff Possessed/Footstep 120 800
+
+$random Possessed/Idle { Possessed/Idle1 Possessed/Idle2 Possessed/Idle3 Possessed/Idle4 Possessed/Idle5 Possessed/Idle6 Possessed/Idle7 Possessed/Idle8 }
+Possessed/Idle1 "Sounds/Possessed/Idle/HIH_P_Idle1.ogg"
+Possessed/Idle2 "Sounds/Possessed/Idle/HIH_P_Idle2.ogg"
+Possessed/Idle3 "Sounds/Possessed/Idle/HIH_P_Idle3.ogg"
+Possessed/Idle4 "Sounds/Possessed/Idle/HIH_P_Idle4.ogg"
+Possessed/Idle5 "Sounds/Possessed/Idle/HIH_P_Idle5.ogg"
+Possessed/Idle6 "Sounds/Possessed/Idle/HIH_P_Idle6.ogg"
+Possessed/Idle7 "Sounds/Possessed/Idle/HIH_P_Idle7.ogg"
+Possessed/Idle8 "Sounds/Possessed/Idle/HIH_P_Idle8.ogg"
+
+$limit Possessed/Idle 12
+$rolloff Possessed/Idle 140 900
