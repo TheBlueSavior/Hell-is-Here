@@ -33,7 +33,7 @@ Class HIH_Possessed : HIH_MonsterBase
 		{
 		if (!random(0, 60))
 			{
-				A_StartSound("Possessed/Idle",35,volume:frandom(0.0,0.2),pitch:frandom(0.5,1));
+				A_StartSound("Possessed/Idle",35,volume:frandom(0.0,0.25),pitch:frandom(0.5,1));
 			}
 		}
 		A00_ A 0 A_Jump(45,"Explore");
@@ -44,7 +44,7 @@ Class HIH_Possessed : HIH_MonsterBase
 		{
 		if (!random(0, 50))
 			{
-				A_StartSound("Possessed/Idle",35,volume:frandom(0.0,0.2),pitch:frandom(0.5,1));
+				A_StartSound("Possessed/Idle",35,volume:frandom(0.0,0.25),pitch:frandom(0.5,1));
 			}
 		}
 		A00_ BBBB 4
@@ -52,7 +52,7 @@ Class HIH_Possessed : HIH_MonsterBase
 		A_Recoil(frandom(0.1,0.3));
 		KAI_Wander();
 		}
-		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.03);
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.035);
 		A00_ CCCC random(2,12)
 		{
 		A_Recoil(frandom(-0.5,-0.1));
@@ -62,7 +62,7 @@ Class HIH_Possessed : HIH_MonsterBase
 		A_Recoil(frandom(0.1,0.3));
 		KAI_Wander();
 		}
-		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.03);
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.035);
 		POS1 A 0 A_Jump(40,"Idle");
 		A00_ EEEE random(2,12)
 		{
