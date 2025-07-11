@@ -4,6 +4,7 @@
 misc/startupdone "Sounds/Misc/HIH_MenuGroan.ogg"
 
 HIH_TITLEMAP "Sounds/Misc/HIH_TITLEMAP.ogg"
+HIH_MAPDRONE "Sounds/Misc/HIH_MAPDRONE.ogg"
 
 //POSSESSED
 $random Possessed/Footstep { Possessed/Footstep1 Possessed/Footstep2 Possessed/Footstep3 Possessed/Footstep4 }

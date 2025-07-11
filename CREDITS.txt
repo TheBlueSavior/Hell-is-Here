@@ -3,3 +3,4 @@
 Startup loading sound - Survival Crisis Z
 Font - VCR OSD Mono
 Project Zomboid - Footsteps
+Silent Hill - Menu music
