@@ -2,5 +2,5 @@
 
 Startup loading sound - Survival Crisis Z
 Font - VCR OSD Mono
-Project Zomboid - Footsteps
+Half Life Alyx - Footsteps
 Silent Hill - Menu music
