@@ -39,7 +39,9 @@ Class HIH_Possessed : HIH_MonsterBase
 		A00_ A 0 A_Jump(45,"Explore");
 		Loop;
 	Explore:
-		TNT1 A 0 A_SetSpeed(6);
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(128, "Explore1");
+		TNT1 A 0 A_SetSpeed(4);
 		TNT1 A 0
 		{
 		if (!random(0, 50))
@@ -52,7 +54,7 @@ Class HIH_Possessed : HIH_MonsterBase
 		A_Recoil(frandom(0.1,0.3));
 		KAI_Wander();
 		}
-		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2);
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2,pitch:0.8);
 		A00_ CCCC random(2,12)
 		{
 		A_Recoil(frandom(-0.5,-0.1));
@@ -62,11 +64,40 @@ Class HIH_Possessed : HIH_MonsterBase
 		A_Recoil(frandom(0.1,0.3));
 		KAI_Wander();
 		}
-		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2);
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2,pitch:0.8);
 		POS1 A 0 A_Jump(40,"Idle");
 		A00_ EEEE random(2,12)
 		{
 		A_Recoil(frandom(-0.5,-0.1));
+		}
+		Loop;
+	Explore1:
+		TNT1 A 0 A_SetSpeed(3);
+		TNT1 A 0
+		{
+		if (!random(0, 50))
+			{
+				A_StartSound("Possessed/Idle",35,volume:frandom(0.0,0.3),pitch:frandom(0.85,1));
+			}
+		}
+		A00_ BBBBB 2
+		{
+		KAI_Wander();
+		}
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2,pitch:0.8);
+		A00_ CCCCC 2
+		{
+		KAI_Wander();
+		}
+		A00_ DDDDD 2
+		{
+		KAI_Wander();
+		}
+		TNT1 A 0 A_StartSound("Possessed/Footstep",4,volume:0.2,pitch:0.8);
+		POS1 A 0 A_Jump(40,"Idle");
+		A00_ EEEEE 2
+		{
+		KAI_Wander();
 		}
 		Loop;
     Death:
