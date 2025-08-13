@@ -59,13 +59,14 @@ Class SectorSpawner : Actor
     void SpawnInSector()
     {
         //Console.Printf("haiii");
-        int pt_in_arr = GetRandomActor();
-        class<Actor> GivenScout = ScoutActors[pt_in_arr];
 
 
         // ik this logic is dumb right now im gonna iron it out eventually
         for (int i = 0; i < level.sectors.Size(); i++)
         {
+            int pt_in_arr = GetRandomActor();
+            class<Actor> GivenScout = ScoutActors[pt_in_arr];
+            
             Sector sec = level.sectors[i];
 
             Vector2 sec_center = sec.centerspot;
