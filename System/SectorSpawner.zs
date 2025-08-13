@@ -66,7 +66,7 @@ Class SectorSpawner : Actor
         {
             int pt_in_arr = GetRandomActor();
             class<Actor> GivenScout = ScoutActors[pt_in_arr];
-            
+
             Sector sec = level.sectors[i];
 
             Vector2 sec_center = sec.centerspot;
@@ -97,7 +97,7 @@ Class SectorSpawner : Actor
         super.PostBeginPlay();
 
         // manual could be changed
-        ScoutActors.Push("ChaingunGuy");
+        ScoutActors.Push("HIH_Possessed");
         ScoutActors.Push("ZombieMan");
         ScoutActors.Push("ShotgunGuy");
 
