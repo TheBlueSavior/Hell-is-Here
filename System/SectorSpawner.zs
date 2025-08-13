@@ -13,20 +13,8 @@ Class SectorSpawnInit : EventHandler
 Class SectorSpawner : Actor
 {
 
-    struct SpawnEntry
-    {
-        Class<Actor> Scout;
-        int Weight;
-    }
-
-    Struct PotentialSpawn
-    {
-        Actor ScoutToSpawn;
-        Vector3 PointInMap;
-    }
-
-
-    Array<SpawnEntry> ScoutActors;
+    Array<Class<Actor> > ScoutActors;
+    Array<int> SpawnWeights;
 
 
     int IntervalCounter;
@@ -43,15 +31,15 @@ Class SectorSpawner : Actor
         }
     }
 
-    void GetRandomActor()
+    int GetRandomActor()
     {
         int TotalWeight = 0;
 
         // Sum all weights
         for (int i = 0; i < ScoutActors.Size(); i++)
-            TotalWeight += ScoutActors[i].Weight;
+            TotalWeight += SpawnWeights[i];
 
-        if (TotalWeight <= 0) return;
+        if (TotalWeight <= 0) return 0;
 
         // Pick a random number in [0, totalWeight)
         int choice = Random(0, TotalWeight - 1);
@@ -59,20 +47,21 @@ Class SectorSpawner : Actor
         // Walk through list until we find the chosen one
         for (int i = 0; i < ScoutActors.Size(); i++)
         {
-            choice -= ScoutActors[i].Weight;
+            choice -= SpawnWeights[i];
             if (choice < 0)
             {
-                return ScoutActors[i].Scout;
+                return i;
                 break;  
             }
         }
+        return 0;
     }
 
     void SpawnInSector()
     {
-        Actor GivenScout = GetRandomActor();
-        int hbox = GivenScout.radius;
-        int height = GivenScout.height;
+        int pt_in_arr = GetRandomActor();
+        class<Actor> GivenScout = ScoutActors[pt_in_arr];
+        
 
         for (int i = 0; i < level.sectors.Size(); i++)
         {
@@ -86,6 +75,7 @@ Class SectorSpawner : Actor
             {
                 continue; //in the void - go to next attempt
             }
+
             let scout = Spawn(GivenScout, sec_point);
             if (scout.TestMobjLocation() == true)
             {
@@ -100,14 +90,18 @@ Class SectorSpawner : Actor
         }
     }
     
-    override void BeginPlay()
+    override void PostBeginPlay()
     {
-        super.BeginPlay();
+        super.PostBeginPlay();
 
         // manual could be changed
-        ScoutActors.push((SpawnEntry)("DoomImp", 50));
-        ScoutActors.push((SpawnEntry)("ZombieMan", 30));
-        ScoutActors.push((SpawnEntry)("ShotgunGuy", 20));
+        ScoutActors.Push("ChaingunGuy");
+        ScoutActors.Push("ZombieMan");
+        ScoutActors.Push("ShotgunGuy");
+
+        SpawnWeights.Push(50);
+        SpawnWeights.Push(30);
+        SpawnWeights.Push(20);
     }
 
 	Default
