@@ -2,10 +2,7 @@ Class SectorSpawnInit : EventHandler
 {
     override void WorldLoaded(WorldEvent e)
     {
-        if (deathmatch || e.IsReopen)
-			return;
-		else
-			let spawnerz = Actor.Spawn("SectorSpawner",(0,0,0));
+			Actor.Spawn("SectorSpawner",(0,0,0));
 	}
 }
 
@@ -21,14 +18,16 @@ Class SectorSpawner : Actor
 
     override void Tick()
     {
-        super.Tick();
 
         IntervalCounter++;
         if (IntervalCounter >= spawn_interval)
         {
-            IntervalCounter = 0; // reset do * 35 ^
+            //Console.Printf("haiii :3");
+            IntervalCounter = 0; // reset do * 35 ^ for ticks in minutes
             SpawnInSector();
         }
+
+        super.Tick();
     }
 
     int GetRandomActor()
@@ -59,10 +58,12 @@ Class SectorSpawner : Actor
 
     void SpawnInSector()
     {
+        //Console.Printf("haiii");
         int pt_in_arr = GetRandomActor();
         class<Actor> GivenScout = ScoutActors[pt_in_arr];
-        
 
+
+        // ik this logic is dumb right now im gonna iron it out eventually
         for (int i = 0; i < level.sectors.Size(); i++)
         {
             Sector sec = level.sectors[i];
@@ -124,7 +125,10 @@ Class SectorSpawner : Actor
     States
 	{
 	Spawn:
-		TNT1 A 0;
-		Loop;
+		TNT1 A 1;
+		Goto See;
+    See:
+        TNT1 A 3;
+        Loop;
 	}
 }

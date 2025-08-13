@@ -3,6 +3,7 @@
 gameinfo
 {
 
+
 addEventHandlers = "HIH_MusicSetter"
 
 menufontcolor_title = "White" 

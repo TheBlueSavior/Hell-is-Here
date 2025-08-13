@@ -2,4 +2,4 @@
 
 Server Int hih_forgetcheck = 1;
 
-Server Int spawn_interval = 60;
+Server Int spawn_interval = 4;
