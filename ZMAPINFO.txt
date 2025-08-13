@@ -3,7 +3,7 @@
 gameinfo
 {
 
-
+addEventHandlers = "SectorSpawnInit"
 addEventHandlers = "HIH_MusicSetter"
 
 menufontcolor_title = "White" 
