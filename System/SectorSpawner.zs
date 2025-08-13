@@ -23,7 +23,7 @@ Class SectorSpawner : Actor
         if (IntervalCounter >= spawn_interval)
         {
             //Console.Printf("haiii :3");
-            IntervalCounter = 0; // reset do * 35 ^ for ticks in minutes
+            IntervalCounter = 0; // reset do * 35 ^ for ticks in seconds
             SpawnInSector();
         }
 
